@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!-- visit repo 😴
+https://github.com/oceanstackarr/invispot.cc
+made by ocean -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>invispot.cc</title>
+    <link rel="icon" href="sources/pot.png" type="image/png"> <!-- Favicon -->
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Shadows Into Light', cursive;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0; /* Fallback color */
+            background-image: url('sources/snowdin.gif'); /* Set the background image */
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px) brightness(0.5); /* Darker and blurred */
+            transition: filter 0.5s ease; /* Smooth transition for brightness change */
+            z-index: -1; /* Send to the back */
+        }
+        h1 {
+            font-size: 36px;
+            color: #fcfcfc;
+            display: inline-block;
+            cursor: pointer;
+        }
+        h1 span, .link span {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        h1 span:hover, .link span:hover {
+            transform: translateY(-5px);
+        }
+        #invispot {
+            display: none;
+            font-size: 36px;
+            color: #fcfcfc;
+            margin: 20px 0; /* Spacing above links */
+        }
+        #links {
+            display: none;
+            position: absolute;
+            bottom: 60px; /* Move links up from the bottom */
+            text-align: center; /* Center the links */
+            width: 100%; /* Allow centering */
+        }
+        #links a {
+            display: inline-block; /* Change to inline-block for centering */
+            margin: 5px 0;
+            text-decoration: none;
+            color: #fcfcfc;
+            font-size: 24px; /* Increase font size for links */
+        }
+        #pfp {
+            display: none; /* Hide the image initially */
+            margin-right: 10px; /* Space between the image and text */
+            width: 50px; /* Set the desired width for the image */
+            height: 50px; /* Set height to maintain square aspect */
+            border-radius: 50%; /* Make the image rounded */
+            transition: transform 0.3s ease; /* Smooth transition for hover effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add drop shadow */
+        }
+        #pfp:hover {
+            transform: translateY(-10px); /* Rise when hovered */
+        }
+        .invispot-container {
+            display: flex;
+            align-items: center; /* Center vertically */
+            margin-top: 20px; /* Space above the container */
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <h1 id="continue">
+        <span>C</span>
+        <span>o</span>
+        <span>n</span>
+        <span>t</span>
+        <span>i</span>
+        <span>n</span>
+        <span>u</span>
+        <span>e</span>
+        <span>?</span>
+    </h1>
+    
+    <div class="invispot-container">
+        <img id="pfp" src="sources/pfp.png" alt="Profile Picture"> <!-- Move the image here -->
+        <h1 id="invispot"></h1> <!-- Changed to empty for JS to fill -->
+    </div>
+
+    <div id="links">
+        <a class="link" href="https://discordapp.com/users/1199831622594338841">Discord</a>
+        <a class="link" href="https://www.youtube.com/@oceanstaack">YouTube</a>
+        <a class="link" href="https://x.com/oceanstack_">X</a>
+    </div>
+
+    <!-- Audio element -->
+    <audio id="gardenAudio" src="sources/Gardemn.mp3" loop></audio>
+
+    <script>
+        // Wrap each letter in a span for "Continue?"
+        const h1Continue = document.querySelector('#continue');
+        const continueText = h1Continue.textContent;
+        h1Continue.innerHTML = ''; // Clear the original text
+        continueText.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            h1Continue.appendChild(span);
+        });
+
+        // Wrap each letter in a span for "invispot.cc"
+        const h1Invispot = document.querySelector('#invispot');
+        const invispotText = "invispot.cc";
+        invispotText.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            h1Invispot.appendChild(span);
+        });
+
+        // Wrap each letter in a span for the links
+        const links = document.querySelectorAll('#links a');
+        links.forEach(link => {
+            const text = link.textContent;
+            link.innerHTML = ''; // Clear the original text
+            text.split('').forEach(char => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                link.appendChild(span);
+            });
+        });
+
+        // Add click event listener
+        h1Continue.addEventListener('click', () => {
+            const gardenAudio = document.getElementById('gardenAudio');
+            gardenAudio.play(); // Play the audio
+            h1Continue.style.display = 'none'; // Hide "Continue?"
+            h1Invispot.style.display = 'block'; // Show "invispot.cc"
+            document.getElementById('pfp').style.display = 'block'; // Show the image
+            document.getElementById('links').style.display = 'block'; // Show links
+            document.querySelector('.background').style.filter = "blur(5px) brightness(1)"; // Increase brightness
+        });
+    </script>
+</body>
+</html>

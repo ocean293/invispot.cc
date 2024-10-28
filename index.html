@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <div id="countdown">3</div>
+    <div id="countdown">Redirecting in 3...</div>
 
     <script>
         let countdown = 3;
@@ -27,7 +27,7 @@
         const interval = setInterval(() => {
             countdown--;
             if (countdown > 0) {
-                countdownElement.textContent = countdown;
+                countdownElement.textContent = `Redirecting in ${countdown}...`;
             } else {
                 countdownElement.textContent = "Redirecting...";
                 clearInterval(interval);

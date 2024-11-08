@@ -1,90 +1,81 @@
-<!--discord; _splashpot-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invispot Server</title>
+    <title>invispot.cc</title>
+    <link rel="icon" type="image/x-icon" href="profile.jpg">
+    <!-- Link to Google Fonts for Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <style>
+        /* Setting up the page to display the GIF as background */
         body {
-            margin: 0;
-            height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: linear-gradient(to right, #4a90e2, #f5a623);
-            font-family: 'Arial', sans-serif;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Sour Gummy', sans-serif; /* Apply Roboto font */
+            margin: 0;
+            color: #61dafb;
+            background: url('bg.gif') center/cover no-repeat fixed;
+            position: relative;
+            overflow: hidden;
         }
-        .container {
+
+        /* Dark overlay to reduce brightness of the background GIF */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity to control brightness */
+            z-index: 0;
+        }
+
+        #countdown {
             text-align: center;
+            font-size: 2em;
+            color: #dcdcdc;
+            position: relative;
+            z-index: 1;
         }
-        .minecraft-font {
-            font-family: 'Minecraft', sans-serif;
-            font-size: 4rem;
-            color: white;
-            display: flex;
-        }
-        .minecraft-font span {
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        .minecraft-font span:hover {
-            transform: translateY(-10px);
-        }
-        .button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            border: none;
-            background-color: #fff;
-            color: #333;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            font-family: 'Minecraft', sans-serif;
-        }
-        button:hover {
-            background-color: #f0f0f0;
-        }
-        .hidden {
-            display: none;
+
+        #timer {
+            color: #569cd6;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="minecraft-font">
-            <span>i</span><span>n</span><span>v</span><span>i</span><span>s</span><span>p</span><span>o</span><span>t</span><span>.</span><span>c</span><span>c</span>
-        </h1>
+    <div id="countdown">
+        <p>Countdown to December 31st:</p>
+        <p id="timer"></p>
     </div>
+
     <script>
-        // Prevent right-click context menu
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
-        });
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const targetDate = new Date(new Date().getFullYear(), 11, 31).getTime();
 
-        // Check if DevTools is opened and hide content
-        const elementToHide = document.querySelector('.container');
+            const distance = targetDate - now;
 
-        function detectDevTools() {
-            const devToolsOpen = window.devtoolsOpen || false;
-            if (devToolsOpen) {
-                elementToHide.classList.add('hidden');
-            } else {
-                elementToHide.classList.remove('hidden');
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("timer").innerHTML = "Happy New Year!";
             }
         }
 
-        // Monitor for DevTools opening
-        setInterval(() => {
-            detectDevTools();
-        }, 1000);
-        
-        // Example method to determine if DevTools is open (might not be foolproof)
-        window.addEventListener('devtoolschange', (event) => {
-            window.devtoolsOpen = event.detail.open;
-        });
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
- <!--https://github.com/ocean293/invispot.cc-->

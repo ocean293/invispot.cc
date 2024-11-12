@@ -3,79 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>invispot.cc</title>
-    <link rel="icon" type="image/x-icon" href="profile.jpg">
-    <!-- Link to Google Fonts for Roboto -->
-    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
+    <title>cute</title>
+    <!-- Favicon -->
+    <link rel="icon" href="profile.jpg" type="image/jpeg">
     <style>
-        /* Setting up the page to display the GIF as background */
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: 'Sour Gummy', sans-serif; /* Apply Roboto font */
-            margin: 0;
-            color: #61dafb;
-            background: url('bg.gif') center/cover no-repeat fixed;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Dark overlay to reduce brightness of the background GIF */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+        /* Make the body fill the screen */
+        body, html {
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity to control brightness */
-            z-index: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff; /* Set background to white */
         }
-
-        #countdown {
-            text-align: center;
-            font-size: 2em;
-            color: #dcdcdc;
-            position: relative;
-            z-index: 1;
-        }
-
-        #timer {
-            color: #569cd6;
+        
+        /* Video element */
+        video {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Maintain aspect ratio and fit within container */
         }
     </style>
 </head>
 <body>
-    <div id="countdown">
-        <p>Countdown to December 31st:</p>
-        <p id="timer"></p>
-    </div>
-
-    <script>
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const targetDate = new Date(new Date().getFullYear(), 11, 31).getTime();
-
-            const distance = targetDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("timer").innerHTML = "Happy New Year!";
-            }
-        }
-
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
+    <video controls>
+        <source src="IMG_3564.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 </body>
 </html>

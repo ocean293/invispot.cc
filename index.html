@@ -3,92 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>title tag | invispot.cc</title>
+    <title>invispot.cc</title>
 
-    <!-- Favicon link -->
-    <link rel="icon" href="48058.png" type="image/png">
-
+    <link rel="icon" href="https://files.catbox.moe/6c8pmu.webp" type="image/png">
     <style>
-        /* Center the content */
-        body, html {
-            height: 100%;
+        body {
             margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* Stack the text and image vertically */
+            flex-direction: column; 
             background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            user-select: none;
         }
 
-        /* Header text styling */
-        h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px; /* Space between the text and image */
-            text-align: center;
-            transition: transform 0.3s ease; /* Smooth transition for hover effect */
-        }
-
-        /* Hover effect to move the header text up */
-        h1:hover {
-            transform: translateY(-5px); /* Move the text 10px upwards */
-        }
-
-        /* Image styling */
-        img {
-            width: 500px;
-            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
-        }
-
-        /* Hover effect to move the image up */
-        img:hover {
-            transform: translateY(-10px); /* Move the image 10px upwards */
-        }
-
-        /* Discord link styling */
-        .socials {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .socials a {
-            text-decoration: none;
-            color: #7289da; /* Discord's color */
+        .text-container {
+            display: flex;
+            font-size: 100px;
             font-weight: bold;
-            margin: 0 10px;
-            font-size: 18px;
-            transition: color 0.5s ease, transform 0.3s ease; /* Smooth transition for both color and scale */
+            letter-spacing: 10px;
+            margin-bottom: 20px;
         }
 
-        /* Rapid color change and enlarge the link on hover */
-        .socials a:hover {
-            animation: colorChange 0.5s infinite alternate; /* Apply the animation */
-            transform: scale(1.2); /* Enlarge the link slightly more */
+        .letter, .button-text {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: rise 0.5s ease forwards;
         }
 
-        /* Define the keyframes for rapid color change */
-        @keyframes colorChange {
-            0% { color: #7289da; }
-            25% { color: #819cff; }
-            50% { color: #7289da; }
-            75% { color: #819cff; }
-            100% { color: #7289da; }
+        /* Animation for each letter of SOLO */
+        .letter:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .letter:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .letter:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .letter:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+     
+        .button-text {
+            font-size: 30px; 
+            font-weight: normal;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            position: relative;
+            transition: color 0.2s;
+            animation-delay: 0.8s;
+        }
+
+      
+        .button-text::after {
+            content: '/swiftness';
+            opacity: 0;
+            position: absolute;
+            left: 100%;
+            margin-left: 10px;
+            font-size: 30px;
+            color: #333;
+            transition: opacity 0.3s ease;
+            vertical-align: middle;
+        }
+
+    
+        .button-text:hover {
+            color: #007BFF;
+        }
+
+        .button-text:hover::after {
+            opacity: 0.4;
+        }
+
+        @keyframes rise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Main heading text -->
-    <h1>Website in Progress, Check out my socials doe</h1>
-    
-    <!-- Image with the name webp.png -->
-    <img src="webp.png" alt="WebP Image">
-    
-    <!-- Discord link -->
-    <div class="socials">
-        <a href="https://discordapp.com/users/1199831622594338841" target="_blank">Discord</a>
+    <div class="text-container">
+        <div class="letter">s</div>
+        <div class="letter">o</div>
+        <div class="letter">l</div>
+        <div class="letter">o</div>
     </div>
 
+   
+    <a href="https://solo.to/swiftness/" class="button-text" target="_blank">solo.to</a>
 </body>
 </html>

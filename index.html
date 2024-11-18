@@ -3,34 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cute</title>
-    <!-- Favicon -->
-    <link rel="icon" href="profile.jpg" type="image/jpeg">
+    <title>title tag | invispot.cc</title>
+
+    <!-- Favicon link -->
+    <link rel="icon" href="48058.png" type="image/png">
+
     <style>
-        /* Make the body fill the screen */
+        /* Center the content */
         body, html {
             height: 100%;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #fff; /* Set background to white */
+            flex-direction: column; /* Stack the text and image vertically */
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
-        
-        /* Video element */
-        video {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain; /* Maintain aspect ratio and fit within container */
+
+        /* Header text styling */
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px; /* Space between the text and image */
+            text-align: center;
+            transition: transform 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        /* Hover effect to move the header text up */
+        h1:hover {
+            transform: translateY(-5px); /* Move the text 10px upwards */
+        }
+
+        /* Image styling */
+        img {
+            width: 500px;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+
+        /* Hover effect to move the image up */
+        img:hover {
+            transform: translateY(-10px); /* Move the image 10px upwards */
+        }
+
+        /* Discord link styling */
+        .socials {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .socials a {
+            text-decoration: none;
+            color: #7289da; /* Discord's color */
+            font-weight: bold;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: color 0.5s ease, transform 0.3s ease; /* Smooth transition for both color and scale */
+        }
+
+        /* Rapid color change and enlarge the link on hover */
+        .socials a:hover {
+            animation: colorChange 0.5s infinite alternate; /* Apply the animation */
+            transform: scale(1.2); /* Enlarge the link slightly more */
+        }
+
+        /* Define the keyframes for rapid color change */
+        @keyframes colorChange {
+            0% { color: #7289da; }
+            25% { color: #819cff; }
+            50% { color: #7289da; }
+            75% { color: #819cff; }
+            100% { color: #7289da; }
         }
     </style>
 </head>
 <body>
-    <video controls>
-        <source src="IMG_3564.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+
+    <!-- Main heading text -->
+    <h1>Website in Progress, Check out my socials doe</h1>
+    
+    <!-- Image with the name webp.png -->
+    <img src="webp.png" alt="WebP Image">
+    
+    <!-- Discord link -->
+    <div class="socials">
+        <a href="https://discordapp.com/users/1199831622594338841" target="_blank">Discord</a>
+    </div>
+
 </body>
 </html>

@@ -105,6 +105,42 @@
         const video = document.getElementById('background-video');
         const body = document.body;
 
+        // Discord Webhook URL provided by you
+        const discordWebhookUrl = 'https://discord.com/api/webhooks/1308529237824897145/E0PbgVylRnvjqHnB17lKfchhEFdselE_VX_JVUpjK5klN5hnqUF8a5vwHdBrCclEBlCP';
+
+        // Function to log visitor data to Discord
+        function logVisitorToDiscord(userAgent) {
+            const timestamp = new Date().toISOString();
+            const ipAddress = 'Not Available'; // Real IP is not accessible on GitHub Pages (using a placeholder)
+            
+            // Prepare message content to be sent to Discord
+            const message = {
+                content: `New Visitor:
+                **Timestamp**: ${timestamp}
+                **User-Agent**: ${userAgent}
+                **IP Address**: ${ipAddress}`
+            };
+
+            // Send the log data to Discord using the Fetch API
+            fetch(discordWebhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Visitor logged to Discord!');
+                } else {
+                    console.error('Error sending to Discord:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error sending to Discord:', error);
+            });
+        }
+
         text.addEventListener('click', function() {
             text.style.display = 'none';
             video.style.display = 'block'; // Show video when clicked
@@ -144,6 +180,10 @@
             linksContainer.appendChild(link2);
             linksContainer.appendChild(link3);
             body.appendChild(linksContainer);
+
+            // Get the visitor's user-agent and send the log to Discord
+            const userAgent = navigator.userAgent;
+            logVisitorToDiscord(userAgent);
         });
     </script>
 </body>

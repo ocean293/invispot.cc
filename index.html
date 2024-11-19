@@ -1,1 +1,147 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>continue?</title><link rel="icon" href="https://files.catbox.moe/v8o66k.png" type="image/png"><link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"><style>body{margin:0;height:100vh;background-color:black;display:flex;justify-content:center;align-items:center;font-family:'Roboto Mono',monospace;color:white;font-size:1em;position:relative;overflow:hidden}.text{cursor:pointer;z-index:10;transition:transform .3s ease}.text:hover{transform:translateY(-3px)}.invispot-text{font-size:2em;color:white;font-weight:bold;z-index:20;position:absolute;text-align:center;transition:transform .3s ease}.invispot-text:hover{transform:translateY(-3px)}.made-by{font-size:1.2em;color:white;z-index:20;position:absolute;top:54%;transform:translateY(-50%);text-align:center}.links{display:flex;justify-content:center;gap:20px;position:absolute;top:94%;transform:translateY(-50%);width:100%}.link{color:white;font-size:1em;text-decoration:none;padding:10px;transition:color .3s ease,transform .3s ease}.link:hover{color:#e0e0e0;transform:translateY(-3px)}video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;transition:filter .5s ease-in-out}</style></head><body><div class="text" id="continue-text">Continue?</div><video id="background-video" preload="auto" loop autoplay><source src="go.mp4" type="video/mp4">Your browser does not support the video tag.</video><script>const text=document.getElementById('continue-text');const video=document.getElementById('background-video');const body=document.body;text.addEventListener('click',function(){text.style.display='none';video.style.display='block';video.play();video.style.filter='blur(10px)';document.title='invispot.cc';const invispotText=document.createElement('div');invispotText.className='invispot-text';invispotText.textContent='invispot.cc';body.appendChild(invispotText);const madeByText=document.createElement('div');madeByText.className='made-by';madeByText.textContent='- made by solo';body.appendChild(madeByText);const linksContainer=document.createElement('div');linksContainer.className='links';const link1=document.createElement('a');link1.className='link';link1.href='https://discord.com/users/1199831622594338841';link1.textContent='Discord';const link2=document.createElement('a');link2.className='link';link2.href='https://solo.to/swiftness/';link2.textContent='solo.to';const link3=document.createElement('a');link3.className='link';link3.href='https://www.youtube.com/@solosfan';link3.textContent='YouTube';linksContainer.appendChild(link1);linksContainer.appendChild(link2);linksContainer.appendChild(link3);body.appendChild(linksContainer);});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>continue?</title>
+    <link rel="icon" href="https://files.catbox.moe/v8o66k.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Roboto Mono', monospace;
+            color: white;
+            font-size: 1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text {
+            cursor: pointer;
+            z-index: 10;
+            transition: transform .3s ease;
+        }
+
+        .text:hover {
+            transform: translateY(-3px);
+        }
+
+        .invispot-text {
+            font-size: 2em;
+            color: white;
+            font-weight: bold;
+            z-index: 20;
+            position: absolute;
+            text-align: center;
+            transition: transform .3s ease;
+        }
+
+        .invispot-text:hover {
+            transform: translateY(-3px);
+        }
+
+        .made-by {
+            font-size: 1.2em;
+            color: white;
+            z-index: 20;
+            position: absolute;
+            top: 54%;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: absolute;
+            top: 94%;
+            transform: translateY(-50%);
+            width: 100%;
+        }
+
+        .link {
+            color: white;
+            font-size: 1em;
+            text-decoration: none;
+            padding: 10px;
+            transition: color .3s ease, transform .3s ease;
+        }
+
+        .link:hover {
+            color: #e0e0e0;
+            transform: translateY(-3px);
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            display: none; /* Hide video initially */
+            transition: filter .5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="text" id="continue-text">Continue?</div>
+    <video id="background-video" preload="auto" loop>
+        <source src="go.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <script>
+        const text = document.getElementById('continue-text');
+        const video = document.getElementById('background-video');
+        const body = document.body;
+
+        text.addEventListener('click', function() {
+            text.style.display = 'none';
+            video.style.display = 'block'; // Show video when clicked
+            video.play(); // Play video after click
+            video.style.filter = 'blur(10px)';
+            document.title = 'invispot.cc';
+
+            const invispotText = document.createElement('div');
+            invispotText.className = 'invispot-text';
+            invispotText.textContent = 'invispot.cc';
+            body.appendChild(invispotText);
+
+            const madeByText = document.createElement('div');
+            madeByText.className = 'made-by';
+            madeByText.textContent = '- made by solo';
+            body.appendChild(madeByText);
+
+            const linksContainer = document.createElement('div');
+            linksContainer.className = 'links';
+
+            const link1 = document.createElement('a');
+            link1.className = 'link';
+            link1.href = 'https://discord.com/users/1199831622594338841';
+            link1.textContent = 'Discord';
+
+            const link2 = document.createElement('a');
+            link2.className = 'link';
+            link2.href = 'https://solo.to/swiftness/';
+            link2.textContent = 'solo.to';
+
+            const link3 = document.createElement('a');
+            link3.className = 'link';
+            link3.href = 'https://www.youtube.com/@solosfan';
+            link3.textContent = 'YouTube';
+
+            linksContainer.appendChild(link1);
+            linksContainer.appendChild(link2);
+            linksContainer.appendChild(link3);
+            body.appendChild(linksContainer);
+        });
+    </script>
+</body>
+</html>

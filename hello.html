@@ -3,26 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Welcome to the Hello Page!</h1>
-    <p>You are logged in.</p>
-    <button onclick="signOut()">Sign Out</button>
-
+    <title>Hello</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCY3y0ZpQqoAaqT2BMXzgO33P6SB4g45Mk",
+            authDomain: "elytra-lol.firebaseapp.com",
+            projectId: "elytra-lol",
+            storageBucket: "elytra-lol.firebasestorage.app",
+            messagingSenderId: "839933921030",
+            appId: "1:839933921030:web:02d1707e69ebcfa8608087",
+            measurementId: "G-5M8HZ6MP2R"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Sign out function
+        // Check if user is signed in
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById('user').textContent = `Hello, ${user.email}`;
+            } else {
+                window.location.href = 'index.html';  // Redirect if not logged in
+            }
+        });
+
         function signOut() {
             auth.signOut().then(() => {
-                alert('You have signed out.');
-                window.location.href = 'index.html';
-            }).catch((error) => {
-                console.error(error);
-                alert('Error signing out');
+                window.location.href = 'index.html';  // Redirect to login page after sign-out
             });
         }
     </script>
+</head>
+<body>
+    <h1 id="user">Hello, User</h1>
+    <button onclick="signOut()">Sign Out</button>
 </body>
 </html>

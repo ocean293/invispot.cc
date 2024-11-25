@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,9 +27,17 @@
 
     /* Gradient Animation */
     @keyframes gradient-bg {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     /* Main Container */
@@ -139,20 +148,21 @@
     }
   </style>
 </head>
+
 <body>
   <div class="main-container">
     <div class="form-wrapper">
       <div class="form-content">
         <!-- Login Form -->
-        <form class="form login-form active" id="login-form">
+        <form class="form login-form active">
           <h2>Welcome Back!</h2>
           <p>Login to your account to continue</p>
           <div class="input-group">
-            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="email" placeholder="Email" required>
             <span class="input-icon">📧</span>
           </div>
           <div class="input-group">
-            <input type="password" id="login-password" placeholder="Password" required>
+            <input type="password" placeholder="Password" required>
             <span class="input-icon">🔒</span>
           </div>
           <button type="submit" class="btn">Login</button>
@@ -162,19 +172,19 @@
         </form>
 
         <!-- Signup Form -->
-        <form class="form signup-form" id="signup-form">
+        <form class="form signup-form">
           <h2>Create Account</h2>
           <p>Sign up to explore new opportunities</p>
           <div class="input-group">
-            <input type="text" id="signup-username" placeholder="Username" required>
+            <input type="text" placeholder="Username" required>
             <span class="input-icon">👤</span>
           </div>
           <div class="input-group">
-            <input type="email" id="signup-email" placeholder="Email" required>
+            <input type="email" placeholder="Email" required>
             <span class="input-icon">📧</span>
           </div>
           <div class="input-group">
-            <input type="password" id="signup-password" placeholder="Password" required>
+            <input type="password" placeholder="Password" required>
             <span class="input-icon">🔒</span>
           </div>
           <button type="submit" class="btn">Sign Up</button>
@@ -186,58 +196,91 @@
     </div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+
   <script>
+    // Firebase Configuration - Replace with your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCY3y0ZpQqoAaqT2BMXzgO33P6SB4g45Mk",
+      authDomain: "elytra-lol.firebaseapp.com",
+      projectId: "elytra-lol",
+      storageBucket: "elytra-lol.firebasestorage.app",
+      messagingSenderId: "839933921030",
+      appId: "1:839933921030:web:02d1707e69ebcfa8608087",
+      measurementId: "G-5M8HZ6MP2R"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Check if user is already logged in
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Redirect to hello.html if logged in
+        window.location.href = 'hello.html';
+      }
+    });
+
+    // Sign-up logic
+    const signupForm = document.querySelector(".signup-form");
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const email = signupForm.querySelector("input[type='email']").value;
+      const password = signupForm.querySelector("input[type='password']").value;
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Redirect to hello.html after successful signup
+          window.location.href = 'hello.html';
+        })
+        .catch((error) => {
+          console.error(error.message);
+          alert(error.message);
+        });
+    });
+
+    // Login logic
+    const loginForm = document.querySelector(".login-form");
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const email = loginForm.querySelector("input[type='email']").value;
+      const password = loginForm.querySelector("input[type='password']").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Redirect to hello.html after successful login
+          window.location.href = 'hello.html';
+        })
+        .catch((error) => {
+          console.error(error.message);
+          alert(error.message);
+        });
+    });
+
+    // Toggle between SignUp and Login forms
     const toggleButtons = document.querySelectorAll(".toggle-form");
     const formContent = document.querySelector(".form-content");
-    const loginForm = document.querySelector(".login-form");
-    const signupForm = document.querySelector(".signup-form");
+    const loginFormElement = document.querySelector(".login-form");
+    const signupFormElement = document.querySelector(".signup-form");
 
     toggleButtons.forEach(button => {
       button.addEventListener("click", () => {
-        loginForm.classList.toggle("active");
-        signupForm.classList.toggle("active");
+        loginFormElement.classList.toggle("active");
+        signupFormElement.classList.toggle("active");
 
-        if (signupForm.classList.contains("active")) {
-          formContent.style.transform = "translateX(-50%)";
+        if (signupFormElement.classList.contains("active")) {
+          formContent.style.transform = "translateX(-50%)"; // Slide to show signup form
         } else {
-          formContent.style.transform = "translateX(0%)";
+          formContent.style.transform = "translateX(0%)"; // Slide back to login form
         }
       });
     });
-
-    // Check if the user is already logged in
-    if (localStorage.getItem('loggedIn') === 'true') {
-      window.location.href = 'hello.html'; // Redirect if logged in
-    }
-
-    // Handle Login
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-
-      // You would add server-side login verification here
-      // For now, we'll simulate a successful login by saving to localStorage
-      localStorage.setItem('loggedIn', 'true');
-      localStorage.setItem('email', email); // Store email if needed
-
-      window.location.href = 'hello.html'; // Redirect to hello.html
-    });
-
-    // Handle Signup
-    document.getElementById('signup-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('signup-username').value;
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-
-      // Simulate a successful signup and store the info
-      localStorage.setItem('loggedIn', 'true');
-      localStorage.setItem('username', username);
-      localStorage.setItem('email', email);
-
-      window.location.href = 'hello.html'; // Redirect to hello.html
-    });
   </script>
 </body>
+
 </html>

@@ -1,44 +1,243 @@
 <!DOCTYPE html>
-<!-- solo.to/swiftness 😴
-made by solo :3 -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>invispot.cc</title>
-    <link rel="icon" href="s/favicon.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="s.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Reset */
+    body, h2, p, input, button {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6C63FF, #4ADEDE, #FF6584);
+      background-size: 300% 300%;
+      animation: gradient-bg 8s infinite;
+    }
+
+    /* Gradient Animation */
+    @keyframes gradient-bg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Main Container */
+    .main-container {
+      width: 100%;
+      max-width: 400px;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Form Wrapper */
+    .form-wrapper {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .form-content {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+      width: 200%;
+    }
+
+    .form {
+      width: 50%;
+      padding: 30px;
+      background: white;
+      border-radius: 10px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .form.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #333;
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px 40px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .input-group .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #aaa;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-radius: 5px;
+      background: linear-gradient(120deg, #6C63FF, #FF6584);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: linear-gradient(120deg, #FF6584, #4ADEDE);
+    }
+
+    .switch-text {
+      text-align: center;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .switch-text .toggle-form {
+      color: #6C63FF;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .switch-text .toggle-form:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="background"></div>
+  <div class="main-container">
+    <div class="form-wrapper">
+      <div class="form-content">
+        <!-- Login Form -->
+        <form class="form login-form active" id="login-form">
+          <h2>Welcome Back!</h2>
+          <p>Login to your account to continue</p>
+          <div class="input-group">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <span class="input-icon">📧</span>
+          </div>
+          <div class="input-group">
+            <input type="password" id="login-password" placeholder="Password" required>
+            <span class="input-icon">🔒</span>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <p class="switch-text">
+            Don’t have an account? <span class="toggle-form">Sign Up</span>
+          </p>
+        </form>
 
-    <h1 id="continue">
-        <span>C</span>
-        <span>o</span>
-        <span>n</span>
-        <span>t</span>
-        <span>i</span>
-        <span>n</span>
-        <span>u</span>
-        <span>e</span>
-        <span>?</span>
-    </h1>
-
-    <div class="invispot-container">
-        <img id="pfp" src="s/pfp.png" alt="Profile Picture">
-        <h1 id="invispot"></h1>
+        <!-- Signup Form -->
+        <form class="form signup-form" id="signup-form">
+          <h2>Create Account</h2>
+          <p>Sign up to explore new opportunities</p>
+          <div class="input-group">
+            <input type="text" id="signup-username" placeholder="Username" required>
+            <span class="input-icon">👤</span>
+          </div>
+          <div class="input-group">
+            <input type="email" id="signup-email" placeholder="Email" required>
+            <span class="input-icon">📧</span>
+          </div>
+          <div class="input-group">
+            <input type="password" id="signup-password" placeholder="Password" required>
+            <span class="input-icon">🔒</span>
+          </div>
+          <button type="submit" class="btn">Sign Up</button>
+          <p class="switch-text">
+            Already have an account? <span class="toggle-form">Login</span>
+          </p>
+        </form>
+      </div>
     </div>
+  </div>
 
-    <div id="links">
-        <a class="link" href="https://solo.to/swiftness/">Solo.to</a>
-        <a class="link" href="https://www.youtube.com/@oceanstaack">YouTube</a>
-        <a class="link" href="https://x.com/oceanstack_">X</a>
-    </div>
+  <script>
+    const toggleButtons = document.querySelectorAll(".toggle-form");
+    const formContent = document.querySelector(".form-content");
+    const loginForm = document.querySelector(".login-form");
+    const signupForm = document.querySelector(".signup-form");
 
+    toggleButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        loginForm.classList.toggle("active");
+        signupForm.classList.toggle("active");
 
-    <audio id="gardenAudio" src="s/Gardemn.mp3" loop></audio>
+        if (signupForm.classList.contains("active")) {
+          formContent.style.transform = "translateX(-50%)";
+        } else {
+          formContent.style.transform = "translateX(0%)";
+        }
+      });
+    });
 
-    <script src="s.js"></script>
+    // Check if the user is already logged in
+    if (localStorage.getItem('loggedIn') === 'true') {
+      window.location.href = 'hello.html'; // Redirect if logged in
+    }
+
+    // Handle Login
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      // You would add server-side login verification here
+      // For now, we'll simulate a successful login by saving to localStorage
+      localStorage.setItem('loggedIn', 'true');
+      localStorage.setItem('email', email); // Store email if needed
+
+      window.location.href = 'hello.html'; // Redirect to hello.html
+    });
+
+    // Handle Signup
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('signup-username').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+
+      // Simulate a successful signup and store the info
+      localStorage.setItem('loggedIn', 'true');
+      localStorage.setItem('username', username);
+      localStorage.setItem('email', email);
+
+      window.location.href = 'hello.html'; // Redirect to hello.html
+    });
+  </script>
 </body>
 </html>

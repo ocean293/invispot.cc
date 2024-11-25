@@ -220,6 +220,7 @@
     auth.onAuthStateChanged((user) => {
       if (user) {
         // Redirect to hello.html if logged in
+        console.log("User is logged in: ", user);
         window.location.href = 'hello.html';
       }
     });
@@ -228,18 +229,22 @@
     const signupForm = document.querySelector(".signup-form");
     signupForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      console.log("Sign-up form submitted"); // Debugging line
 
+      const username = signupForm.querySelector("input[type='text']").value;
       const email = signupForm.querySelector("input[type='email']").value;
       const password = signupForm.querySelector("input[type='password']").value;
 
+      // Firebase Authentication - Create User
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          // Redirect to hello.html after successful signup
+          console.log("User signed up: ", userCredential); // Debugging line
+          // After successful sign-up, redirect to hello.html
           window.location.href = 'hello.html';
         })
         .catch((error) => {
-          console.error(error.message);
-          alert(error.message);
+          console.error("Error during sign-up: ", error.message);
+          alert(error.message); // Show error message to user
         });
     });
 
@@ -247,37 +252,34 @@
     const loginForm = document.querySelector(".login-form");
     loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      console.log("Login form submitted"); // Debugging line
 
       const email = loginForm.querySelector("input[type='email']").value;
       const password = loginForm.querySelector("input[type='password']").value;
 
+      // Firebase Authentication - Log in User
       auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          // Redirect to hello.html after successful login
+          console.log("User logged in: ", userCredential); // Debugging line
+          // After successful login, redirect to hello.html
           window.location.href = 'hello.html';
         })
         .catch((error) => {
-          console.error(error.message);
-          alert(error.message);
+          console.error("Error during login: ", error.message);
+          alert(error.message); // Show error message to user
         });
     });
 
-    // Toggle between SignUp and Login forms
-    const toggleButtons = document.querySelectorAll(".toggle-form");
-    const formContent = document.querySelector(".form-content");
-    const loginFormElement = document.querySelector(".login-form");
-    const signupFormElement = document.querySelector(".signup-form");
+    // Switch forms on clicking toggle-form link
+    const toggleForms = document.querySelectorAll(".toggle-form");
+    toggleForms.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const loginForm = document.querySelector(".login-form");
+        const signupForm = document.querySelector(".signup-form");
 
-    toggleButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        loginFormElement.classList.toggle("active");
-        signupFormElement.classList.toggle("active");
-
-        if (signupFormElement.classList.contains("active")) {
-          formContent.style.transform = "translateX(-50%)"; // Slide to show signup form
-        } else {
-          formContent.style.transform = "translateX(0%)"; // Slide back to login form
-        }
+        // Toggle active class to switch forms
+        loginForm.classList.toggle("active");
+        signupForm.classList.toggle("active");
       });
     });
   </script>

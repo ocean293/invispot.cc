@@ -1,288 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login & Signup</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    /* General Reset */
-    body, h2, p, input, button {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Login</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCY3y0ZpQqoAaqT2BMXzgO33P6SB4g45Mk",
+            authDomain: "elytra-lol.firebaseapp.com",
+            projectId: "elytra-lol",
+            storageBucket: "elytra-lol.firebasestorage.app",
+            messagingSenderId: "839933921030",
+            appId: "1:839933921030:web:02d1707e69ebcfa8608087",
+            measurementId: "G-5M8HZ6MP2R"
+        };
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #6C63FF, #4ADEDE, #FF6584);
-      background-size: 300% 300%;
-      animation: gradient-bg 8s infinite;
-    }
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-    /* Gradient Animation */
-    @keyframes gradient-bg {
-      0% {
-        background-position: 0% 50%;
-      }
+        // Show the sign-up form and hide login form
+        function showSignUpForm() {
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+        }
 
-      50% {
-        background-position: 100% 50%;
-      }
+        // Show the login form and hide sign-up form
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+        }
 
-      100% {
-        background-position: 0% 50%;
-      }
-    }
+        // Handle Sign Up
+        function signUp() {
+            const email = document.getElementById('signupEmail').value;
+            const actionCodeSettings = {
+                url: 'https://<your-username>.github.io/<your-repository-name>/hello.html',  // Change this to your GitHub Pages URL
+                handleCodeInApp: true
+            };
 
-    /* Main Container */
-    .main-container {
-      width: 100%;
-      max-width: 400px;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    }
+            auth.sendSignInLinkToEmail(email, actionCodeSettings)
+                .then(() => {
+                    // Store email locally to sign in later
+                    window.localStorage.setItem('emailForSignIn', email);
+                    alert('Check your email for the sign-in link!');
+                    showLoginForm();  // Switch to login form
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Error during sign-up: ' + error.message);
+                });
+        }
 
-    /* Form Wrapper */
-    .form-wrapper {
-      overflow: hidden;
-      position: relative;
-    }
+        // Handle Login
+        function login() {
+            const emailForSignIn = window.localStorage.getItem('emailForSignIn');
+            if (auth.isSignInWithEmailLink(window.location.href)) {
+                auth.signInWithEmailLink(emailForSignIn, window.location.href)
+                    .then(result => {
+                        window.localStorage.removeItem('emailForSignIn');
+                        window.location.href = 'hello.html';  // Redirect to hello page after successful login
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('Error logging in');
+                    });
+            }
+        }
 
-    .form-content {
-      display: flex;
-      transition: transform 0.6s ease-in-out;
-      width: 200%;
-    }
+        // Handle form submission
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            signUp();
+        });
 
-    .form {
-      width: 50%;
-      padding: 30px;
-      background: white;
-      border-radius: 10px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-    }
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            login();
+        });
 
-    .form.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    h2 {
-      margin-bottom: 10px;
-      font-weight: 600;
-      color: #333;
-      font-size: 24px;
-    }
-
-    p {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 20px;
-    }
-
-    .input-group {
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 10px 40px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-    .input-group .input-icon {
-      position: absolute;
-      top: 50%;
-      left: 10px;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: #aaa;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px 0;
-      border: none;
-      border-radius: 5px;
-      background: linear-gradient(120deg, #6C63FF, #FF6584);
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: linear-gradient(120deg, #FF6584, #4ADEDE);
-    }
-
-    .switch-text {
-      text-align: center;
-      font-size: 13px;
-      color: #555;
-    }
-
-    .switch-text .toggle-form {
-      color: #6C63FF;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .switch-text .toggle-form:hover {
-      text-decoration: underline;
-    }
-  </style>
+        // Check if the user is already signed in on page load
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                window.location.href = 'hello.html';  // Redirect to hello page if logged in
+            }
+        });
+    </script>
 </head>
-
 <body>
-  <div class="main-container">
-    <div class="form-wrapper">
-      <div class="form-content">
-        <!-- Login Form -->
-        <form class="form login-form active">
-          <h2>Welcome Back!</h2>
-          <p>Login to your account to continue</p>
-          <div class="input-group">
-            <input type="email" placeholder="Email" required>
-            <span class="input-icon">📧</span>
-          </div>
-          <div class="input-group">
-            <input type="password" placeholder="Password" required>
-            <span class="input-icon">🔒</span>
-          </div>
-          <button type="submit" class="btn">Login</button>
-          <p class="switch-text">
-            Don’t have an account? <span class="toggle-form">Sign Up</span>
-          </p>
-        </form>
+    <h1>Sign Up / Login</h1>
 
-        <!-- Signup Form -->
-        <form class="form signup-form">
-          <h2>Create Account</h2>
-          <p>Sign up to explore new opportunities</p>
-          <div class="input-group">
-            <input type="text" placeholder="Username" required>
-            <span class="input-icon">👤</span>
-          </div>
-          <div class="input-group">
-            <input type="email" placeholder="Email" required>
-            <span class="input-icon">📧</span>
-          </div>
-          <div class="input-group">
-            <input type="password" placeholder="Password" required>
-            <span class="input-icon">🔒</span>
-          </div>
-          <button type="submit" class="btn">Sign Up</button>
-          <p class="switch-text">
-            Already have an account? <span class="toggle-form">Login</span>
-          </p>
+    <!-- Sign Up Form -->
+    <div id="signupForm" style="display:block;">
+        <h2>Sign Up</h2>
+        <form>
+            <input type="email" id="signupEmail" placeholder="Enter your email" required>
+            <button type="submit">Sign Up</button>
         </form>
-      </div>
+        <p>Already have an account? <button onclick="showLoginForm()">Log In</button></p>
     </div>
-  </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+    <!-- Login Form -->
+    <div id="loginForm" style="display:none;">
+        <h2>Log In</h2>
+        <form>
+            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+            <button type="submit">Log In</button>
+        </form>
+        <p>Don't have an account? <button onclick="showSignUpForm()">Sign Up</button></p>
+    </div>
 
-  <script>
-    // Firebase Configuration - Replace with your Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyCY3y0ZpQqoAaqT2BMXzgO33P6SB4g45Mk",
-      authDomain: "elytra-lol.firebaseapp.com",
-      projectId: "elytra-lol",
-      storageBucket: "elytra-lol.firebasestorage.app",
-      messagingSenderId: "839933921030",
-      appId: "1:839933921030:web:02d1707e69ebcfa8608087",
-      measurementId: "G-5M8HZ6MP2R"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Check if user is already logged in
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        // Redirect to hello.html if logged in
-        console.log("User is logged in: ", user);
-        window.location.href = 'hello.html';
-      }
-    });
-
-    // Sign-up logic
-    const signupForm = document.querySelector(".signup-form");
-    signupForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      console.log("Sign-up form submitted"); // Debugging line
-
-      const username = signupForm.querySelector("input[type='text']").value;
-      const email = signupForm.querySelector("input[type='email']").value;
-      const password = signupForm.querySelector("input[type='password']").value;
-
-      // Firebase Authentication - Create User
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          console.log("User signed up: ", userCredential); // Debugging line
-          // After successful sign-up, redirect to hello.html
-          window.location.href = 'hello.html';
-        })
-        .catch((error) => {
-          console.error("Error during sign-up: ", error.message);
-          alert(error.message); // Show error message to user
-        });
-    });
-
-    // Login logic
-    const loginForm = document.querySelector(".login-form");
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      console.log("Login form submitted"); // Debugging line
-
-      const email = loginForm.querySelector("input[type='email']").value;
-      const password = loginForm.querySelector("input[type='password']").value;
-
-      // Firebase Authentication - Log in User
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          console.log("User logged in: ", userCredential); // Debugging line
-          // After successful login, redirect to hello.html
-          window.location.href = 'hello.html';
-        })
-        .catch((error) => {
-          console.error("Error during login: ", error.message);
-          alert(error.message); // Show error message to user
-        });
-    });
-
-    // Switch forms on clicking toggle-form link
-    const toggleForms = document.querySelectorAll(".toggle-form");
-    toggleForms.forEach((toggle) => {
-      toggle.addEventListener("click", () => {
-        const loginForm = document.querySelector(".login-form");
-        const signupForm = document.querySelector(".signup-form");
-
-        // Toggle active class to switch forms
-        loginForm.classList.toggle("active");
-        signupForm.classList.toggle("active");
-      });
-    });
-  </script>
 </body>
-
 </html>

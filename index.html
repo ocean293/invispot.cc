@@ -3,116 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up / Login</title>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+    <title>join the discord</title>
+    <link rel="icon" href="https://files.catbox.moe/vwxwm7.jpg" type="image/jpg"> <!-- Added Favicon -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text */
+            flex-direction: column; /* Stack elements vertically */
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Space between the images and text */
+        }
+
+        .text {
+            font-style: italic;
+            font-size: 36px;
+            transition: transform 0.3s ease;
+        }
+
+        .text:hover {
+            transform: translateY(-10px); /* Moves the text upwards */
+        }
+
+        .button {
+            margin-top: 20px; /* Space between text and button */
+            padding: 10px 20px;
+            background-color: #7785cc; /* Button background color */
+            color: white;
+            border: none;
+            border-radius: 25px; /* Rounded corners */
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Remove underline from link */
+            display: inline-block; /* Ensure it behaves like a button */
+            text-align: center; /* Center the text within the button */
+        }
+
+        .button:hover {
+            background-color: #5a6a9b; /* Darken button on hover */
+        }
+
+        .image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Fully rounded images */
+            object-fit: cover; /* Make sure the image covers the circle */
+            transition: transform 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        .image:hover {
+            transform: translateY(-10px); /* Move the image upwards on hover */
+        }
+
+        .scroll-container {
+            max-height: 250px; /* Set max height for smaller scrollable area */
+            max-width: 300px; /* Set max width for smaller scrollable area */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            margin-top: 40px; /* Space between the content and scrollable content */
+            padding: 20px;
+            width: 100%; /* Ensure container doesn't expand beyond max-width */
+            border: 1px solid #fff; /* Border around the scrollable area */
+            border-radius: 10px; /* Rounded corners */
+        }
+
+        .message {
+            background-color: #444444; /* Slightly darker background for message */
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .message:hover {
+            transform: translateY(-5px); /* Slightly lift the message box on hover */
+        }
+
+        .friend-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCY3y0ZpQqoAaqT2BMXzgO33P6SB4g45Mk",
-            authDomain: "elytra-lol.firebaseapp.com",
-            projectId: "elytra-lol",
-            storageBucket: "elytra-lol.firebasestorage.app",
-            messagingSenderId: "839933921030",
-            appId: "1:839933921030:web:02d1707e69ebcfa8608087",
-            measurementId: "G-5M8HZ6MP2R"
-        };
+        // Array of titles to cycle through
+        const titles = ["fishy site", "join the discord", "friends"];
+        let index = 0;
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Show the sign-up form and hide login form
-        function showSignUpForm() {
-            document.getElementById('signupForm').style.display = 'block';
-            document.getElementById('loginForm').style.display = 'none';
+        // Function to change the title
+        function changeTitle() {
+            document.title = titles[index]; // Set the title
+            index = (index + 1) % titles.length; // Update index, looping back if necessary
         }
 
-        // Show the login form and hide sign-up form
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('signupForm').style.display = 'none';
-        }
-
-        // Handle Sign Up
-        function signUp() {
-            const email = document.getElementById('signupEmail').value;
-            const actionCodeSettings = {
-                url: 'https://invispot.cc/hello.html',  // Update to your custom domain
-                handleCodeInApp: true
-            };
-
-            auth.sendSignInLinkToEmail(email, actionCodeSettings)
-                .then(() => {
-                    // Store email locally to sign in later
-                    window.localStorage.setItem('emailForSignIn', email);
-                    alert('Check your email for the sign-in link!');
-                    showLoginForm();  // Switch to login form
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Error during sign-up: ' + error.message);
-                });
-        }
-
-        // Handle Login
-        function login() {
-            const emailForSignIn = window.localStorage.getItem('emailForSignIn');
-            if (auth.isSignInWithEmailLink(window.location.href)) {
-                auth.signInWithEmailLink(emailForSignIn, window.location.href)
-                    .then(result => {
-                        window.localStorage.removeItem('emailForSignIn');
-                        window.location.href = 'hello.html';  // Redirect to hello page after successful login
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        alert('Error logging in');
-                    });
-            }
-        }
-
-        // Handle form submission
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            signUp();
-        });
-
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            login();
-        });
-
-        // Check if the user is already signed in on page load
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                window.location.href = 'hello.html';  // Redirect to hello page if logged in
-            }
-        });
+        // Change the title every 2 seconds
+        setInterval(changeTitle, 2000);
     </script>
 </head>
 <body>
-    <h1>Sign Up / Login</h1>
+    <div class="content">
+        <!-- Left image -->
+        <img src="https://files.catbox.moe/vwxwm7.jpg" alt="Image Left" class="image">
+        
+        <div class="text">
+            Fishy Pointless Website
+        </div>
 
-    <!-- Sign Up Form -->
-    <div id="signupForm" style="display:block;">
-        <h2>Sign Up</h2>
-        <form>
-            <input type="email" id="signupEmail" placeholder="Enter your email" required>
-            <button type="submit">Sign Up</button>
-        </form>
-        <p>Already have an account? <button onclick="showLoginForm()">Log In</button></p>
+        <!-- Right image -->
+        <img src="https://files.catbox.moe/7tjs12.jpg" alt="Image Right" class="image">
     </div>
 
-    <!-- Login Form -->
-    <div id="loginForm" style="display:none;">
-        <h2>Log In</h2>
-        <form>
-            <input type="email" id="loginEmail" placeholder="Enter your email" required>
-            <button type="submit">Log In</button>
-        </form>
-        <p>Don't have an account? <button onclick="showSignUpForm()">Sign Up</button></p>
+    <!-- Scrollable area for messages -->
+    <div class="scroll-container">
+        <div class="message">
+            <div class="friend-name">Li -</div>
+            <p>This is the best thing ever :D</p>
+        </div>
+        <div class="message">
+            <div class="friend-name">Farville -</div>
+            <p>"im far far away"</p>
+        </div>
+        <div class="message">
+            <div class="friend-name">Kiana -</div>
+            <p>Ermmm fart!</p>
+        </div>
     </div>
 
+    <!-- Wrap the button with an anchor tag to make it clickable -->
+    <a href="https://discord.gg/5CTDp4Tn" target="_blank">
+        <button class="button">
+            Join Discord :3
+        </button>
+    </a>
 </body>
 </html>
